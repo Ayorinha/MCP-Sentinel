@@ -1,3 +1,6 @@
-from mcp_sentinel.core import *
+from mcp_sentinel.core import SecurityGateway, ToolPolicy
 
-def test_policy():\n g=SecurityGateway(ToolPolicy(frozenset({"read"}))); assert g.authorize("read",{}) and not g.authorize("write",{})
+def test_policy():
+    gateway = SecurityGateway(ToolPolicy(frozenset({"read"})))
+    assert gateway.authorize("read", {})
+    assert not gateway.authorize("write", {})
