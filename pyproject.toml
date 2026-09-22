@@ -1,0 +1,7 @@
+[project]
+name="mcp-sentinel"
+version="0.1.0"
+description="Least-privilege policy enforcement for tool calls."
+requires-python=">=3.11"
+[tool.pytest.ini_options]
+pythonpath=["src"]
