@@ -1,23 +1,38 @@
 # MCP-Sentinel
 
-Security gateway for MCP tools with policy enforcement, validation, and audit controls.
+Security gateway for Model Context Protocol environments with deterministic tool policies, schema validation, least privilege, audit trails, and approval controls.
 
-## Status
+## Runtime flow
 
-Engineering foundation — actively developed under **AYORAI · Applied Intelligence**.
+`ToolRequest → Guard → Policy → Audit Decision → PipelineResult`
 
-## Engineering Principles
+The runtime is intentionally network-independent. Integrations belong behind explicit adapters.
 
-- Typed interfaces and explicit contracts
-- Deterministic tests for core behavior
-- CI and security checks on every change
-- Least privilege and provenance by design
-- Reproducible local development
+## Observability
 
-## Roadmap
+Every authorization result contains:
+- tool
+- allow/deny decision
+- machine-readable reason
+- UTC timestamp
 
-See `docs/roadmap.md` for the implementation plan.
+This provides a stable audit boundary without requiring a network service or external telemetry provider.
 
-## Engineering Evolution
+## Security model
 
-This repository follows the AYORAI engineering continuity model: implementation, tests, quality gates, security, observability, performance, integration, production engineering, DevSecOps, documentation, research/evaluation, and governance. A capability is considered complete only when implementation evidence, automated tests, validation evidence, documentation, and CI evidence exist.
+MCP-Sentinel validates requests before policy authorization and fails closed on unsafe requests. Resource validation rejects traversal, absolute paths, Windows drive paths, null bytes, and control characters.
+
+GitHub Actions uses read-only repository contents permissions for CI. GitHub recommends least-privilege workflow permissions and explicit `permissions` declarations. See the repository security documentation for operational guidance.
+
+## Development
+
+```bash
+pip install -e . pytest ruff
+pytest
+ruff check src tests --select E9,F --ignore F403,F405
+mcp-sentinel --principal agent --tool search --action read --resource docs/item --allow search
+```
+
+## License
+
+MIT — Anderson Leon Ayora.
