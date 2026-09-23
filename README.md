@@ -36,3 +36,8 @@ mcp-sentinel --principal agent --tool search --action read --resource docs/item 
 ## License
 
 MIT — Anderson Leon Ayora.
+
+
+## Release
+
+Tagged releases are built and validated by GitHub Actions. The release pipeline creates wheel and source distributions, installs the wheel, runs the CLI smoke check, and validates package metadata with Twine. Publishing to PyPI is intentionally not automatic until a trusted-publishing relationship and protected release environment are configured. GitHub documents Trusted Publishing via OIDC as the recommended tokenless approach for PyPI.
