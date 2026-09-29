@@ -8,6 +8,22 @@ Security gateway for Model Context Protocol environments with deterministic tool
 
 The runtime is intentionally network-independent. Integrations belong behind explicit adapters.
 
+## Architecture diagram
+
+~~~mermaid
+flowchart LR
+    R[Tool Request] --> G[Validation Guard]
+    G --> P[Deterministic Policy]
+    P --> D{Allow?}
+    D -->|Yes| X[Pipeline Result / Tool Execution]
+    D -->|No| B[Blocked]
+    P --> A[Audit Decision]
+    G --> A
+    D --> A
+~~~
+
+> **Fail-closed boundary:** requests are validated and authorized before execution.
+
 ## Observability
 
 Every authorization result contains:
